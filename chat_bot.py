@@ -12,8 +12,8 @@ import warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 
-training = pd.read_csv('./Data/Training.csv')
-testing= pd.read_csv('./Data/Testing.csv')
+training = pd.read_csv('Data/Training.csv')
+testing= pd.read_csv('Data/Testing.csv')
 cols= training.columns
 cols= cols[:-1]
 x = training[cols]
@@ -41,13 +41,12 @@ clf = clf1.fit(x_train,y_train)
 # print ("cross result========")
 scores = cross_val_score(clf, x_test, y_test, cv=3)
 # print (scores)
-# print (scores.mean())
+print (scores.mean())
 
 
 model=SVC()
 model.fit(x_train,y_train)
-# print("for svm: ")
-# print(model.score(x_test,y_test))
+print(model.score(x_test,y_test))
 
 importances = clf.feature_importances_
 indices = np.argsort(importances)[::-1]
@@ -84,7 +83,7 @@ def calc_condition(exp,days):
 
 def getDescription():
     global description_list
-    with open('./MasterData/symptom_Description.csv') as csv_file:
+    with open('MasterData/symptom_Description.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -96,7 +95,7 @@ def getDescription():
 
 def getSeverityDict():
     global severityDictionary
-    with open('./MasterData/symptom_severity.csv') as csv_file:
+    with open('MasterData/symptom_severity.csv') as csv_file:
 
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
@@ -110,7 +109,7 @@ def getSeverityDict():
 
 def getprecautionDict():
     global precautionDictionary
-    with open('./MasterData/symptom_precaution.csv') as csv_file:
+    with open('MasterData/symptom_precaution.csv') as csv_file:
 
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
@@ -121,7 +120,7 @@ def getprecautionDict():
 
 def getInfo():
     name=input("")
-    print("Hello, %s",(name),end='')
+    print("Hello, ",name)
 
 def check_pattern(dis_list,inp):
     pred_list=[]
@@ -167,15 +166,15 @@ def tree_to_code(tree, feature_names):
 
     while True:
 
-        print("Enter the symptom you are experiencing ", end='')
+        print("Enter the symptom you are experiencing  \t\t",)
         disease_input = input("")
         conf,cnf_dis=check_pattern(chk_dis,disease_input)
         if conf==1:
-            print("searches related to input ")
+            print("searches related to input: ")
             for num,it in enumerate(cnf_dis):
                 print(num,")",it)
             if num!=0:
-                print(f"Select the one you meant (0 - {num}):  ")
+                print(f"Select the one you meant (0 - {num})  ")
                 conf_inp = int(input(""))
             else:
                 conf_inp=0
@@ -191,7 +190,8 @@ def tree_to_code(tree, feature_names):
 
     while True:
         try:
-            num_days=int(input("Okay. From how many days ?"))
+            print("Okay. From how many days ? ")
+            num_days=int(input())
             break
         except:
             print("Enter valid input.")
@@ -219,7 +219,7 @@ def tree_to_code(tree, feature_names):
             # if len(dis_list)!=0:
             #     print("symptoms present  " + str(list(symptoms_present)))
             # print("symptoms given "  +  str(list(symptoms_given)) )
-            print("Are you experiencing any ",end='')
+            print("Are you experiencing any ")
             symptoms_exp=[]
             for syms in list(symptoms_given):
                 inp=""
@@ -229,7 +229,7 @@ def tree_to_code(tree, feature_names):
                     if(inp=="yes" or inp=="no"):
                         break
                     else:
-                        print("provide proper answers i.e. (yes/no) ")
+                        print("provide proper answers i.e. (yes/no) : ",end="")
                 if(inp=="yes"):
                     symptoms_exp.append(syms)
 
@@ -263,5 +263,4 @@ getDescription()
 getprecautionDict()
 getInfo()
 tree_to_code(clf,cols)
-
 

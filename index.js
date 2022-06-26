@@ -66,6 +66,9 @@ app.post('/message',async(req,res)=>{
 })
 
 const chatBot = new pyShell.PythonShell('./chat_bot.py');
+chatBot.send('prathviraj')
+chatBot.send('fever')
+chatBot.send
 chatBot.on('message',function(message){
     console.log('\n newMessgae: '+message+'\n');
     botMessages.push(message)
